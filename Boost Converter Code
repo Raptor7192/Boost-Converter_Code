@@ -1,0 +1,35 @@
+//importing the pwm library by Sam Knight and modified by terrjmyers
+//https://github.com/terryjmyers/PWM
+#include <PWM.h>
+// declaring frequency and pin for pwm
+int frequency = 27000;
+int pin = 9;
+
+void setup() {
+  // put your setup code here, to run once:
+InitTimersSafe(); // initializng timers safely, duh
+bool done = SetPinFrequencySafe(pin, frequency); // checking if it worked
+// if it did work then led will blink thrice
+if(done == true){
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(300);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(300);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(300);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(300);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(300);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(300);
+}
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+int setVolts = analogRead(A1); // reading potentiometer value
+int writeVolts = map(setVolts, 0, 1023, 0, 150); // mapping that value from 0-1023 to 0-150 (not 255 as that may create a voltage too big)
+pwmWrite(pin, writeVolts); // writing the pwm value to pin 11
+}
